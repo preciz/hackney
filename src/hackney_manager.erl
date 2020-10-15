@@ -158,7 +158,7 @@ start_async_response(Ref) ->
       #client{transport=Transport, socket=Socket,
         stream_to=StreamTo} = Client,
       case gen_server:call(?MODULE, {start_async_response, Ref,
-        StreamTo, Client}) of
+        StreamTo, Client}, 15000) of
         {ok, Pid} ->
           %% store temporarely the socket in the the ets so it can
           %% be used by the other process later
@@ -282,6 +282,8 @@ init(_) ->
 
   %% initialize metrics
   Metrics = init_metrics(),
+
+  process_flag(priority, max),
 
   process_flag(trap_exit, true),
   %% return {ok, {Pids, Refs}}
