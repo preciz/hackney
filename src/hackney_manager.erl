@@ -158,7 +158,7 @@ start_async_response(Ref) ->
       #client{transport=Transport, socket=Socket,
         stream_to=StreamTo} = Client,
       case gen_server:call(?MODULE, {start_async_response, Ref,
-        StreamTo, Client}, 15000) of
+        StreamTo, Client}, 30000) of
         {ok, Pid} ->
           %% store temporarely the socket in the the ets so it can
           %% be used by the other process later
